@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+
+.homeSection {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: $Ligth-green;
+  padding: 50px 0 50px 0;
+
+  .moreMoviesTitle {
+    margin: 20px 0 20px 0;
+  }
+}
