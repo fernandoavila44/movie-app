@@ -6,11 +6,4 @@ You can click the main title Movie app in the header to navigate to the main pat
 
 ## Tech stack
 
-React
-TypeScript
-React Query
-React Router
-Sass
-Css Modules
-Axios
-Vite
+**Client:** React, TypeScript, React Query, React Router, Sass, Css Modules, Axios, Vite
