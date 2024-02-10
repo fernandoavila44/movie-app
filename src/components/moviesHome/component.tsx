@@ -4,17 +4,25 @@ import styles from "./component.module.scss";
 import { TGlobalGenres, TGlobalMoviesPayload } from "../../types/movies";
 
 type TProps = {
-  pendingTrendingMovies: boolean
-  errorTrendingMovies: Error | null
-  dataTrendingMovies?: TGlobalMoviesPayload
-  pendingGenres: boolean
-  errorGenres: Error | null
-  dataGenres?: TGlobalGenres
+  trendingMovies: {
+    pendingTrendingMovies: boolean
+    errorTrendingMovies: Error | null
+    dataTrendingMovies?: TGlobalMoviesPayload
+  },
+  genres: {
+    pendingGenres: boolean
+    errorGenres: Error | null
+    dataGenres?: TGlobalGenres
+  }
 }
 
-const MoviesHome: React.FC<TProps> = ({ ...props }) => {
+const MoviesHome: React.FC<TProps> = ({ trendingMovies, genres }) => {
 
-  const { pendingTrendingMovies, pendingGenres, dataTrendingMovies, dataGenres } = props;
+  const { pendingTrendingMovies, dataTrendingMovies, errorTrendingMovies } = trendingMovies
+  const { pendingGenres, dataGenres, errorGenres } = genres
+
+  if (errorTrendingMovies || errorGenres)
+    return <p>An error has ocurred!</p>
 
   return (
     <section className={styles.homeSection}>

@@ -8,25 +8,25 @@ const MovieDetailPage = () => {
 
   const { movieId } = useParams()
 
-  const { isPending: pendingDetailMovie, error: errorDetailMovie, data: movieDetail, refetch } = useQuery({
+  const { isPending: pendingDetailMovie, error: errorDetailMovie, data: movieDetail, refetch: refetchDetailMovie } = useQuery({
     queryKey: ['detailMovie'],
     queryFn: () =>
       MoviesRepository.getMovieDetail(movieId as string)
   })
 
-  const { isPending: pendingCredits, error: errorCredits, data: movieCredits } = useQuery({
+  const { isPending: pendingCredits, error: errorCredits, data: movieCredits, refetch: refetchCredits } = useQuery({
     queryKey: ['creditsByMovie'],
     queryFn: () =>
       MoviesRepository.getCreditsByMovie(movieId as string)
   })
 
-  const { isPending: pendingRecommendatios, error: errorRecommendatios, data: dataRecommendatios } = useQuery({
+  const { isPending: pendingRecommendatios, error: errorRecommendatios, data: dataRecommendatios, refetch: refetchRecommendatios } = useQuery({
     queryKey: ['recommendatiosByMovie'],
     queryFn: () =>
       MoviesRepository.getRecommendationsByMovie(movieId as string)
   })
 
-  const { isPending: pendingGenres, error: errorGenres, data: dataGenres } = useQuery({
+  const { isPending: pendingGenres, error: errorGenres, data: dataGenres, refetch: refetchGenres } = useQuery({
     queryKey: ['genresData'],
     queryFn: () =>
       MoviesRepository.getGenreList()
@@ -37,8 +37,11 @@ const MovieDetailPage = () => {
       top: 0,
       behavior: 'smooth'
     });
-    refetch();
-  }, [movieId, refetch]);
+    refetchDetailMovie();
+    refetchCredits();
+    refetchRecommendatios();
+    refetchGenres;
+  }, [movieId, refetchCredits, refetchDetailMovie, refetchGenres, refetchRecommendatios]);
 
   return (
     <MovieDetail

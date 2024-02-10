@@ -18,12 +18,8 @@ const Home = () => {
 
   return (
     <MoviesHome
-      pendingTrendingMovies={pendingTrendingMovies}
-      errorTrendingMovies={errorTrendingMovies}
-      dataTrendingMovies={dataTrendingMovies}
-      pendingGenres={pendingGenres}
-      errorGenres={errorGenres}
-      dataGenres={dataGenres}
+      trendingMovies={{ pendingTrendingMovies, dataTrendingMovies, errorTrendingMovies }}
+      genres={{ pendingGenres, dataGenres, errorGenres }}
     />
   )
 }
