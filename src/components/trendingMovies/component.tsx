@@ -15,9 +15,10 @@ const TrendingMovies: React.FC<TProps> = ({ dataMovies, genres }) => {
       {dataMovies.map((movie, index) => (
         <MovieCard
           key={`movie_${movie.id}`}
-          movieGenre={getGenreNames(genres, movie.genre_ids, true)}
+          movieGenre={getGenreNames(genres, movie.genre_ids)}
           movieName={movie.title}
           movieImage={movie.backdrop_path}
+          movieId={movie.id}
           dynamicGridClass={index}
         />
       ))}
