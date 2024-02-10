@@ -4,12 +4,12 @@ type TProps = {
   children: React.ReactNode;
 }
 
-const MainContent: React.FC<TProps> = ({children}) =>{
-  return(
-    <main>
-      <Header/>
+const MainContent: React.FC<TProps> = ({ children }) => {
+  return (
+    <>
+      <Header />
       {children}
-    </main>
+    </>
   )
 }
 

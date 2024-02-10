@@ -15,8 +15,9 @@ const CustomListMovies: React.FC<TProps> = ({ dataMovies, genres }) => {
       {dataMovies.map((movie) => (
         <MovieCard
           key={`movie_${movie.id}`}
-          movieGenre={getGenreNames(genres, movie.genre_ids, true)}
+          movieGenre={getGenreNames(genres, movie.genre_ids)}
           movieName={movie.title}
+          movieId={movie.id}
           movieImage={movie.backdrop_path}
         />
       ))}
