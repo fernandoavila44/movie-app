@@ -2,37 +2,70 @@ import { AxiosRequestConfig } from "axios";
 import { mergeRight } from "ramda";
 import Api from "../core/api.core";
 import config from "../config/config";
-import { TGenres, TGlobalGenres, TGlobalMoviesPayload } from "../types/movies";
+import { TGlobalGenres, TGlobalMoviesPayload, TMovieDetail } from "../types/movies";
+import { TCredits } from "../types/creditsCasts";
 
-
-export class MoviesRepository extends Api{
+export class MoviesRepository extends Api {
   protected readonly endpoints = {
     trendingMovies: "trending/movie/day",
     genreList: "genre/movie/list",
     movieDetail: "/movie/{movie_id}",
     movieCreditsCast: "movie/{movie_id}/credits",
-    recommendatios: "movie/{movie_id}/recommendations"
+    recommendatios: "movie/{movie_id}/recommendations",
+    genresData: "genre/movie/list",
+    movieDetail1: "/movie/{movie_id}",
+    creditsByMovie: "movie/{movie_id}/credits",
+    recommendationsByMovie: "movie/{movie_id}/recommendations"
   }
 
-  constructor (baseOptions: AxiosRequestConfig = {}){
-    super(mergeRight({baseURL:config.apiUrl}, baseOptions));
+  constructor(baseOptions: AxiosRequestConfig = {}) {
+    super(mergeRight({ baseURL: config.apiUrl }, baseOptions));
   }
 
-  async getTrendingMovies(): Promise<TGlobalMoviesPayload>{
+  protected getHeaders() {
+    return { Authorization: `Bearer ${config.apiToken}` };
+  }
+
+  async getTrendingMovies(): Promise<TGlobalMoviesPayload> {
     return this.get<TGlobalMoviesPayload>(this.endpoints.trendingMovies,
       {
-        headers: { Authorization: `Bearer ${config.apiToken}` },
+        headers: this.getHeaders(),
       },
     ).then((response) => response.data);
   }
 
-  async getGenreList(): Promise<TGlobalGenres>{
+  async getGenreList(): Promise<TGlobalGenres> {
     return this.get<TGlobalGenres>(this.endpoints.genreList,
       {
-        headers: { Authorization: `Bearer ${config.apiToken}` },
+        headers: this.getHeaders(),
+      },
+    ).then((response) => response.data);
+  }
+
+  async getMovieDetail(movieId: string): Promise<TMovieDetail> {
+    return this.get<TMovieDetail>(this.endpoints.movieDetail.replace("{movie_id}", movieId),
+      {
+        headers: this.getHeaders(),
+      },
+    ).then((response) => response.data);
+  }
+
+  async getCreditsByMovie(movieId: string): Promise<TCredits> {
+    return this.get<TCredits>(this.endpoints.movieCreditsCast.replace("{movie_id}", movieId),
+      {
+        headers: this.getHeaders(),
+      },
+    ).then((response) => response.data);
+  }
+
+  async getRecommendationsByMovie(movieId: string): Promise<TGlobalMoviesPayload> {
+    return this.get<TGlobalMoviesPayload>(this.endpoints.recommendatios.replace("{movie_id}", movieId),
+      {
+        headers: this.getHeaders(),
       },
     ).then((response) => response.data);
   }
 }
+
 
 export default new MoviesRepository;

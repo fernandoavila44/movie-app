@@ -1,22 +1,20 @@
-import MoviesRepository from "../../repositories/movies.repository";
-import { useQuery } from "@tanstack/react-query";
 import TrendingMovies from "../trendingMovies/component";
 import CustomListMovies from "../customListMovies/component";
 import styles from "./component.module.scss";
+import { TGlobalGenres, TGlobalMoviesPayload } from "../../types/movies";
 
-const MoviesHome: React.FC = () => {
+type TProps = {
+  pendingTrendingMovies: boolean
+  errorTrendingMovies: Error | null
+  dataTrendingMovies?: TGlobalMoviesPayload
+  pendingGenres: boolean
+  errorGenres: Error | null
+  dataGenres?: TGlobalGenres
+}
 
-  const { isPending: pendingTrendingMovies, error: errorTrendingMovies, data: dataTrendingMovies, isFetching: fetchingTrendingMovies } = useQuery({
-    queryKey: ['trendingMoviesData'],
-    queryFn: () =>
-      MoviesRepository.getTrendingMovies()
-  })
+const MoviesHome: React.FC<TProps> = ({ ...props }) => {
 
-  const { isPending: pendingGenres, error: errorGenres, data: dataGenres, isFetching: fetchingGenres } = useQuery({
-    queryKey: ['genresData'],
-    queryFn: () =>
-      MoviesRepository.getGenreList()
-  })
+  const { pendingTrendingMovies, pendingGenres, dataTrendingMovies, dataGenres } = props;
 
   return (
     <section className={styles.homeSection}>
